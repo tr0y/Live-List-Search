@@ -1,5 +1,5 @@
 /* Live List Search for Mootools 1.2
- * v0.5
+ * v0.6
  * Dedicated to public domain 
  * troy@consideropen.com
  * www.consideropen.com/blog

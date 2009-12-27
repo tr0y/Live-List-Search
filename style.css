@@ -2,8 +2,20 @@ ul.tag_wrap {
 list-style-type: none;
 margin: 0;
 padding: 0;
+width: 200px;
+float: left;
 }
 
 ul.tag_wrap li {
 margin: 5px 0;
+float: left;
+width: 100%;
+}
+
+.LLS_current_selection {
+background-color: yellow;
+}
+
+.tag_count {
+float: right;
 }
