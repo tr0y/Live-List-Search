@@ -22,7 +22,7 @@ You can also use the included events:
 fires when the the list item is clicked, passes event and current term
 
 *enter*
-fires when the user hits enter (while cursor is focused on input), passes event and current term
+fires when user hits enter (while cursor is focused on input), passes event and current term
 
 	searchTags = new LLSearch({
 		'inputID'  : 'list_search',                    
