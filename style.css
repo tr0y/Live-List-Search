@@ -1,0 +1,9 @@
+ul.tag_wrap {
+list-style-type: none;
+margin: 0;
+padding: 0;
+}
+
+ul.tag_wrap li {
+margin: 5px 0;
+}
