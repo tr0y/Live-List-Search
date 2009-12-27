@@ -10,7 +10,6 @@ var LLSearch = new Class ({
 	options: {
 		inputID: '', // the id of the live search input field
 		listID: '', // the id of the ul, ol or table
-		choiceID: '', // the id of the element to inject the choice into
 		inResultsClass: 'LLS_inresults', 
 		listType: 'li', // accepts li or tr
 		preventClick: true,
@@ -25,7 +24,6 @@ var LLSearch = new Class ({
 	initialize: function(options) {		
 		this.setOptions(options);
 		this.inputName = $(this.options.inputID);
-		this.resultsWrap = $(this.options.choiceID);
 		this.setOptions(options);
 		if (this.options.listType == 'tr') {
 			this.searchEl = $$('#' + this.options.listID + ' ' + 'tbody ' + this.options.listType);

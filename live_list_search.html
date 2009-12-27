@@ -10,9 +10,8 @@
 		<script>
 		window.addEvent('domready', function() {
     		searchTags = new LLSearch({
-				'inputID'  : 'add_tag',                        
-				'listID'   : 'tag_wrap',                         
-				'choiceID' : 'chosen_tags',
+				'inputID' : 'add_tag',                        
+				'listID' : 'tag_wrap',                      
 				'searchTermLi' : 'search_term'
 			});
 		});
@@ -21,8 +20,6 @@
 	<body>
 		<form method="post" action="">
 			<p>Tags</p>
-	
-			<p id="chosen_tags"><?php echo $current_tags; ?></p>
 			
 			<p id="add_new_tag">
 				<input type="text" name="add_tag" id="add_tag" autocomplete="off"/>
