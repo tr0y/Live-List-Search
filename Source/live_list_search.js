@@ -40,7 +40,6 @@ var LLSearch = new Class ({
 		searchTermLi: ''
 		/*onEnter: $empty*/
 		/*onClick: $empty*/
-		
 	},
 	initialize: function(options) {		
 		this.setOptions(options);
@@ -61,6 +60,39 @@ var LLSearch = new Class ({
 		this.listClick();
 		this.searchList();
 		this.currentSelection = '';
+	},
+	
+	listClick: function(){
+		if(this.options.listType != 'tr') {
+			this.inList.addEvent('click', function(e) {
+				if(this.options.preventClick == true){
+					e.preventDefault();
+				}
+
+				this.inList.removeClass(this.options.currentSelection);
+
+				e.target.getParent('.' + this.options.inResultsClass).addClass(this.options.currentSelection);
+				
+				var currentTagEl = e.target.getParent('.' + this.options.inResultsClass);
+				if(this.options.searchTermLi != ''){
+					this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection).getElement('.' + this.options.searchTermLi));
+				} else {
+					this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection));		
+				}
+				
+				this.fireEvent('click', [e, this.currentLiveSearch]);
+			}.bind(this));	
+		}
+	},
+	clearList: function(el){
+		this.searchEl.removeClass(this.options.inResultsClass);	
+	},
+	getCurrentText: function(el){	
+		this.currentLiveSearch = el.get('text');
+	}, 
+	
+	getInputValue: function(){
+		this.searchEvents.currentText = this.inputName.get('value').toLowerCase();
 	},
 	
 	filterList: function(){
@@ -132,46 +164,34 @@ var LLSearch = new Class ({
 					this.cursorInList = this.inList.filter('.' + this.options.currentSelection);
 					if(this.cursorInList != 0){
 						e.preventDefault();
-						this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection));
+						if(this.options.searchTermLi != ''){
+							this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection).getElement('.' + this.options.searchTermLi));
+						} else {
+							this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection));		
+						}
+					
 						this.fireEvent('enter', [e, this.currentLiveSearch]);
 					} else {
 						this.getInputValue();
-						this.fireEvent('newenter', [e, this.searchEvents.currentText]);
 					}
 				} 
 			}.bind(this)
 		});
 	},
-	
-	listClick: function(){
-		if(this.options.listType != 'tr') {
-			this.inList.addEvent('click', function(e) {
-				if(this.options.preventClick == true){
-					e.preventDefault();
-				}
-
-				e.target.getParent('.' + this.options.inResultsClass).addClass(this.options.currentSelection);
-				
-				var currentTagEl = e.target.getParent('.' + this.options.inResultsClass);
-				this.getCurrentText(currentTagEl);
-				
-				this.fireEvent('click', [e, this.currentLiveSearch]);
-			}.bind(this));	
+	hightlightSelected: function(){
+		$$('.' + this.options.currentSelection).highlight('#EEDC82');
+		$$('.' + this.options.inResultsClass).removeClass(this.options.currentSelection);
+		this.resetInput();
+	},
+	resetInput: function(){
+		this.inputName.setProperty('value', '');
+		
+		if(this.options.reFocus == true){
+			this.inputName.focus();			
 		}
+
+		this.currentListItem = -1;	
 	},
-	
-	clearList: function(el){
-		this.searchEl.removeClass(this.options.inResultsClass);	
-	},
-	
-	getCurrentText: function(el){	
-		this.currentLiveSearch = el.get('text');
-	}, 
-	
-	getInputValue: function(){
-		this.searchEvents.currentText = this.inputName.get('value').toLowerCase();
-	},
-	
 	scrollOnArrows: function() {
 		this.currentPOS = $(this.options.listID).getElement('.' + this.options.currentSelection).getPosition(this.options.listID);
 		$(this.options.listID).scrollTo(0, this.currentPOS.y);
