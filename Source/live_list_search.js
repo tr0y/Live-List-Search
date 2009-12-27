@@ -1,9 +1,30 @@
-/* Live List Search for Mootools 1.2
- * v0.6
- * Dedicated to public domain 
- * troy@consideropen.com
- * www.consideropen.com/blog
-*****************************************************************/
+/*
+---
+description: Live search class that works on li and tr elements, recognizes up, down, enter, click commands.
+
+license: MIT-style
+
+authors:
+- Troy Wolfe
+
+requires:
+- core: 1.2.4/Event
+- core: 1.2.4/Class
+- core: 1.2.4/Class.Extras
+- core: 1.2.4/Element
+- core: 1.2.4/Element.Event
+- core: 1.2.4/Element.Style
+- core: 1.2.4/DomReady
+
+provides: [LLSearch]
+
+...
+*/
+
+/*!
+Live List Search for Mootools 1.2
+copyright 2009 Troy Wolfe
+*/
 
 var LLSearch = new Class ({
 	Implements: [Options, Events],
@@ -40,33 +61,6 @@ var LLSearch = new Class ({
 		this.listClick();
 		this.searchList();
 		this.currentSelection = '';
-	},
-	
-	listClick: function(){
-		if(this.options.listType != 'tr') {
-			this.inList.addEvent('click', function(e) {
-				if(this.options.preventClick == true){
-					e.preventDefault();
-				}
-
-				e.target.getParent('.' + this.options.inResultsClass).addClass(this.options.currentSelection);
-				
-				var currentTagEl = e.target.getParent('.' + this.options.inResultsClass);
-				this.getCurrentText(currentTagEl);
-				
-				this.fireEvent('click', [e, this.currentLiveSearch]);
-			}.bind(this));	
-		}
-	},
-	clearList: function(el){
-		this.searchEl.removeClass(this.options.inResultsClass);	
-	},
-	getCurrentText: function(el){	
-		this.currentLiveSearch = el.get('text');
-	}, 
-	
-	getInputValue: function(){
-		this.searchEvents.currentText = this.inputName.get('value').toLowerCase();
 	},
 	
 	filterList: function(){
@@ -148,20 +142,36 @@ var LLSearch = new Class ({
 			}.bind(this)
 		});
 	},
-	hightlightSelected: function(){
-		$$('.' + this.options.currentSelection).highlight('#EEDC82');
-		$$('.' + this.options.inResultsClass).removeClass(this.options.currentSelection);
-		this.resetInput();
-	},
-	resetInput: function(){
-		this.inputName.setProperty('value', '');
-		
-		if(this.options.reFocus == true){
-			this.inputName.focus();			
-		}
+	
+	listClick: function(){
+		if(this.options.listType != 'tr') {
+			this.inList.addEvent('click', function(e) {
+				if(this.options.preventClick == true){
+					e.preventDefault();
+				}
 
-		this.currentListItem = -1;	
+				e.target.getParent('.' + this.options.inResultsClass).addClass(this.options.currentSelection);
+				
+				var currentTagEl = e.target.getParent('.' + this.options.inResultsClass);
+				this.getCurrentText(currentTagEl);
+				
+				this.fireEvent('click', [e, this.currentLiveSearch]);
+			}.bind(this));	
+		}
 	},
+	
+	clearList: function(el){
+		this.searchEl.removeClass(this.options.inResultsClass);	
+	},
+	
+	getCurrentText: function(el){	
+		this.currentLiveSearch = el.get('text');
+	}, 
+	
+	getInputValue: function(){
+		this.searchEvents.currentText = this.inputName.get('value').toLowerCase();
+	},
+	
 	scrollOnArrows: function() {
 		this.currentPOS = $(this.options.listID).getElement('.' + this.options.currentSelection).getPosition(this.options.listID);
 		$(this.options.listID).scrollTo(0, this.currentPOS.y);
