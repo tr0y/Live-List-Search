@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Tag Chooser</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js"></script>
+		<script type="text/javascript" src="http://www.consideropen.com/inprogress/tag_chooser/js/live_list_search.js"></script>
+		
+		<script>
+		window.addEvent('domready', function() {
+    		searchTags = new LLSearch({
+				'inputID'  : 'add_tag',                        
+				'listID'   : 'tag_wrap',                         
+				'choiceID' : 'chosen_tags',
+				'searchTermLi' : 'search_term'
+			});
+		});
+		</script>
+	</head> 
+	<body>
+		<form method="post" action="">
+			<p>Tags</p>
+	
+			<p id="chosen_tags"><?php echo $current_tags; ?></p>
+			
+			<p id="add_new_tag">
+				<input type="text" name="add_tag" id="add_tag" autocomplete="off"/>
+				<button id="add_this_tag">add</button>
+			</p>
+			
+			<ul id="tag_wrap" class="tag_wrap">
+				<li><span class="search_term">content</span><span>10</span></li>
+				<li><span class="search_term">test</span><span>9</span></li>
+				<li><span class="search_term">tag</span><span>7</span></li>
+				<li><span class="search_term">another_tag</span><span>5</span></li>
+				<li><span class="search_term">shoes</span><span>5</span></li>
+				<li><span class="search_term">stuff</span><span>4</span></li>
+				<li><span class="search_term">ui</span><span>3</span></li>
+				<li><span class="search_term">plugins</span><span>2</span></li>
+				<li><span class="search_term">utensils</span><span>1</span></li>
+			</ul>
+			
+			<input type="hidden" name="tag_input" id="tag_input">
+		</form>
+	</body>
+</html>
