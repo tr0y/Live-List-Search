@@ -3,8 +3,7 @@
  * Dedicated to public domain 
  * troy@consideropen.com
  * www.consideropen.com/blog
-*/
-
+*****************************************************************/
 
 var LLSearch = new Class ({
 	Implements: [Options, Events],
@@ -110,7 +109,7 @@ var LLSearch = new Class ({
 		this.inputName.addEvents({
 			'keyup': function(e){
 				this.filterList();
-				if(e.key != 'down' || e.key != 'up' || e.key != 'enter' || e.key != 'left' || e.key != 'right') {
+				if(e.key != 'down' && e.key != 'up' && e.key != 'enter' && e.key != 'left' && e.key != 'right') {
 					this.currentListItem = -1;
 					this.searchEl.removeClass(this.options.currentSelection);
 				}
@@ -120,14 +119,15 @@ var LLSearch = new Class ({
 				
 				if(e.key == 'down'){
 					e.preventDefault();
-					if(this.currentListItem != (this.inList.length-1)) {
+					if(this.currentListItem != this.inList.length - 1) {
+						
 						this.currentListItem++;
 						this.searchEl.removeClass(this.options.currentSelection);
 						this.inList[this.currentListItem].addClass(this.options.currentSelection);
 						this.scrollOnArrows();
 					}
-				}
-				if(e.key == 'up'){
+					
+				} else if(e.key == 'up'){
 					e.preventDefault();
 					if(this.currentListItem > 0) {
 						this.currentListItem--;
@@ -135,8 +135,8 @@ var LLSearch = new Class ({
 						this.inList[this.currentListItem].addClass(this.options.currentSelection);
 						this.scrollOnArrows();
 					}
-				}
-				if(e.key == 'enter') {
+					
+				} else if(e.key == 'enter') {
 					this.cursorInList = this.inList.filter('.' + this.options.currentSelection);
 					if(this.cursorInList != 0){
 						e.preventDefault();
