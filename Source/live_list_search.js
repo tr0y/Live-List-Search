@@ -80,6 +80,10 @@ var LLSearch = new Class ({
 					this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection));		
 				}
 				
+				if(this.options.reFocus == true){
+					this.inputName.focus();			
+				}
+				
 				this.fireEvent('click', [e, this.currentLiveSearch]);
 			}.bind(this));	
 		}
@@ -161,37 +165,31 @@ var LLSearch = new Class ({
 					}
 					
 				} else if(e.key == 'enter') {
+					e.stopPropagation();
+					e.preventDefault();
 					this.cursorInList = this.inList.filter('.' + this.options.currentSelection);
 					if(this.cursorInList != 0){
-						e.preventDefault();
+						
 						if(this.options.searchTermLi != ''){
 							this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection).getElement('.' + this.options.searchTermLi));
 						} else {
 							this.getCurrentText($(this.options.listID).getElement('.' + this.options.currentSelection));		
 						}
 					
+						if(this.options.reFocus == true){
+							this.inputName.focus();			
+						}
+					
 						this.fireEvent('enter', [e, this.currentLiveSearch]);
 					} else {
+
 						this.getInputValue();
 					}
 				} 
 			}.bind(this)
 		});
 	},
-	hightlightSelected: function(){
-		$$('.' + this.options.currentSelection).highlight('#EEDC82');
-		$$('.' + this.options.inResultsClass).removeClass(this.options.currentSelection);
-		this.resetInput();
-	},
-	resetInput: function(){
-		this.inputName.setProperty('value', '');
-		
-		if(this.options.reFocus == true){
-			this.inputName.focus();			
-		}
-
-		this.currentListItem = -1;	
-	},
+	
 	scrollOnArrows: function() {
 		this.currentPOS = $(this.options.listID).getElement('.' + this.options.currentSelection).getPosition(this.options.listID);
 		$(this.options.listID).scrollTo(0, this.currentPOS.y);
